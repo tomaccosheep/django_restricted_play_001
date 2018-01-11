@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+Hello! Passed from views.py: {{ con_001 }}
+</head>
+<body>
+<form>
+    <p>Please choose the background color</p>
+    <div>
+        <input type="radio" id="bg_color_1" name="bg_color" value="red">
+        <label for="bg_color_1">Red</label>
+        <input type="radio" id="bg_color_2" name="bg_color" value="blue">
+        <label for="bg_color_2">Blue</label>
+        <input type="radio" id="bg_color_3" name="bg_color" value="orange">
+        <label for="bg_color_3">Orange</label>
+        <input type="radio" id="bg_color_4" name="bg_color" value="purple">
+        <label for="bg_color_4">Purple</label>
+    </div>
+    <div id="save">Save</div>
+</form>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="{% static 'js/site.js' %}"></script>
+</body>
+</html>

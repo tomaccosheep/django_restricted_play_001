@@ -1,0 +1,38 @@
+.EXECUTIVE DESCRIPTION
+...Make a website that allows users to login, select a series of configurations, and create a django website based on the configurations.
+
+.OVERVIEW
+...The primary website should have a series of radio buttons to control the resulting website. They would then be able to view the website they’ve created. On the server, the folder would be copied over, and a python program would find and replace configuration values based on the user’s choice. The user’s choices would also be saved in the database.
+
+.TOOLS/RESOURCES
+...Django
+...Rsync
+...Python to find and replace
+...Simple python labs and functions
+
+.CHALLENGE POINTS
+...Organizing the website
+
+.DATES - MILESTONES
+...Milestone one:
+......Let the client save a configuration to the database
+......Due: 2018/01/15
+...Milestone two:
+......Allow users to create accounts
+......Due: 2018/01/17
+...Milestone three:
+......Allow users to save three configurations, and reproduce a folder based on the configurations
+......Due: 2018/01/22
+...Milestone four:
+......Render the configured website
+......Due: 2018/01/26
+...Milestone five:
+......Fill out the configuration values
+......Due 2018/02/02
+...Milestone six:
+......Add polish
+......Due 2018/02/09
+
+.CLIENT DESCRIPTION
+...The user will open up the site and play with the configuration files. After they have played with the input/output a bit, when they watch a tutorial or read a book on django they will better understand how the framework represents the patterns they saw while experimenting with the site.
+

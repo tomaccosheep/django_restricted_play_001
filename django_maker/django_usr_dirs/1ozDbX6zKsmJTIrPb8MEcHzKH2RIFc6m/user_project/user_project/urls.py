@@ -1,4 +1,4 @@
-"""django_restricted_play_001 URL Configuration
+"""user_project URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -15,15 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django_maker import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index, name='index'),
-    url(r'^get_site/(?P<send_to_playground>[\w]+)$', views.get_site, name='send_to_playground'),
-    url(r'^new_project/$', views.new_project, name='new_project'),
-    url(r'^index/(?P<project_id>[\w]+)/$', views.index, name='project_id'),
-    url(r'^ajax/save/(?P<project_id>[\w]+)/$', views.save, name='project_id'),
-    url(r'^ajax/make/(?P<project_id>[\w]+)/$', views.make, name='project_id'),
 ]
-
-

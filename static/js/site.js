@@ -31,7 +31,8 @@ $.ajaxSetup({
 $("#save").click(function() {
 
     var myObject = new Object();
-    myObject.config_001 = document.querySelector("form");
+    myObject.con_001 = $("input[name='bg_color']:checked").val();
+    console.log($("input[name='bg_color']:checked").val());
     var my_url = window.location.href;
     my_key = (my_url.split("index")[1]).split('/')[1]
     var myString = JSON.stringify(myObject);
@@ -41,5 +42,17 @@ $("#save").click(function() {
         success: console.log('sent json'),
         dataType: 'json',
         data: myString,
+    });
+});
+
+$("#make").click(function() {
+    var my_url = window.location.href;
+    my_key = (my_url.split("index")[1]).split('/')[1]
+    $.ajax({
+        type: "POST",
+        url: '/ajax/make/' + my_key + '/',
+        success: console.log('sent command'),
+        dataType: 'text',
+        data: 'make',
     });
 });

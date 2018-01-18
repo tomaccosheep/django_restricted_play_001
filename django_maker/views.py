@@ -37,8 +37,10 @@ def make(request, project_id):
     dir_path = os.path.dirname(os.path.realpath(__file__))    
     template_string = dir_path + "/django_template_dir/user_project"
     usr_dir_string = dir_path + "/django_usr_dirs/" + project_id
-    subprocess.run("rm -r " + usr_dir_string)
-    subprocess.run("rsync -avP " + template_string + " " + usr_dir_string)
+    command_remove = "rm -r {usr_dir}".format(usr_dir = usr_dir_string)
+    command_rsync = "rsync -avP {template} {usr_dir}".format(template = template_string, usr_dir = usr_dir_string)
+#    subprocess.run(command_remove.split(), shell=False)
+    subprocess.run(command_rsync.split(), shell=False)
     print("rsync -avP " + template_string + " " + usr_dir_string)
     proj = Play_Project.objects.get(unique_id=project_id)
     print(proj.con_001)

@@ -2,24 +2,25 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.http import JsonResponse
 from .models import Play_Project
 import json
-import os 
+import os
 import subprocess
 import fileinput
 import time
-
+from django.utils.crypto import get_random_string
 
 def index(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)
     context_dict = {'con_001': proj.con_001,
+                    'id': proj.id,
                     }
     return render(request, 'django_maker/index.html', context=context_dict)
 
 def new_project(request):
     proj = Play_Project()
-    unique_id = proj.unique_id
+    def_id = get_random_string(length=32)
+    proj.unique_id = def_id
     proj.save()
-    
-    return HttpResponseRedirect('/index/{}/'.format(unique_id))
+    return HttpResponseRedirect('/index/{}/'.format(def_id))
 
 def save(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)
@@ -34,21 +35,36 @@ def save(request, project_id):
 
 
 def make(request, project_id):
-    dir_path = os.path.dirname(os.path.realpath(__file__))    
+    dir_path = os.path.dirname(os.path.realpath(__file__))
     template_string = dir_path + "/django_template_dir/user_project"
     usr_dir_string = dir_path + "/django_usr_dirs/" + project_id
     command_remove = "rm -r {usr_dir}".format(usr_dir = usr_dir_string)
     command_rsync = "rsync -avP {template} {usr_dir}".format(template = template_string, usr_dir = usr_dir_string)
-#    subprocess.run(command_remove.split(), shell=False)
-    subprocess.run(command_rsync.split(), shell=False)
-    print("rsync -avP " + template_string + " " + usr_dir_string)
+    subprocess.run(command_remove, shell=False)
+    command_rsync_list = command_rsync.split()
+    subprocess.run(command_rsync, shell=False)
     proj = Play_Project.objects.get(unique_id=project_id)
-    print(proj.con_001)
     time.sleep(1)
     for line in fileinput.input([dir_path + "/django_usr_dirs/" + project_id + "/user_project/static/css/style.css"], inplace=True):
         print(line.replace('__con_001__', proj.con_001), end='')
     return JsonResponse({'made': True})
-    
 
-def get_site(request):
-    return None
+
+def run(request, project_id):
+    proj = Play_Project.objects.get(unique_id=project_id)
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    usr_dir_string = dir_path + "/django_usr_dirs/" + project_id
+    command_run_mig1 = "python3 {usr_dir}/user_project/manage.py makemigrations".format(usr_dir=usr_dir_string)
+    command_run_mig2 = "python3 {usr_dir}/user_project/manage.py migrate".format(usr_dir=usr_dir_string)
+    command_run_server = "python3 {usr_dir}/user_project/manage.py runserver ".format(usr_dir=usr_dir_string) + str(8000 + proj.id)
+    subprocess.run(command_run_mig1, shell=False)
+    subprocess.run(command_run_mig2, shell=False)
+    subprocess.Popen(command_run_server.split(), shell=False)
+    return JsonResponse({'ran': True})
+
+def view(request, project_id):
+    proj = Play_Project.objects.get(unique_id=project_id)
+    return HttpResponseRedirect('/view_site/{}/'.format(str(8000 + proj.id)))
+
+def kill(request, project_id):
+    return JsonResponse({'kill': True})

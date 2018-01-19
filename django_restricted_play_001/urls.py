@@ -16,14 +16,19 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django_maker import views
+from django.views.generic import RedirectView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
-    url(r'^get_site/(?P<send_to_playground>[\w]+)$', views.get_site, name='send_to_playground'),
     url(r'^new_project/$', views.new_project, name='new_project'),
     url(r'^index/(?P<project_id>[\w]+)/$', views.index, name='project_id'),
     url(r'^ajax/save/(?P<project_id>[\w]+)/$', views.save, name='project_id'),
     url(r'^ajax/make/(?P<project_id>[\w]+)/$', views.make, name='project_id'),
+    url(r'^ajax/run/(?P<project_id>[\w]+)/$', views.run, name='project_id'),
+    url(r'^ajax/view/(?P<project_id>[\w]+)/$', views.view, name='project_id'),
+    url(r'^ajax/kill/(?P<project_id>[\w]+)/$', views.kill, name='project_id'),
+    url(r'^view_site/(?P<port>[\w]+)/$', RedirectView.as_view(url='http://127.0.0.1:8006'), name='user_page'),    
+    
 ]
 
 

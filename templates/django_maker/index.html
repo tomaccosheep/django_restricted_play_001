@@ -4,6 +4,7 @@
 <head>
     <link rel='stylesheet' href='{% static "css/style.css" %}'>
 Hello! Passed from views.py: {{ con_001 }}
+Your ID: {{ id }}
 </head>
 <body>
 <form>
@@ -21,7 +22,9 @@ Hello! Passed from views.py: {{ con_001 }}
         <div id="button_container" class='maincol'>
         <div id="save" class='object dj_button nosel'>Save</div>
         <div id="make" class='object dj_button nosel'>Make</div>
+        <div id="run" class='object dj_button nosel'>Run</div>
         <div id="view" class='object dj_button nosel'>View</div>
+        <div id="kill" class='object dj_button nosel'>Kill</div>
     </div>
 </form>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

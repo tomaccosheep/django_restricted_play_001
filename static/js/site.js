@@ -56,3 +56,42 @@ $("#make").click(function() {
         data: 'make',
     });
 });
+
+
+$("#run").click(function() {
+    var my_url = window.location.href;
+    my_key = (my_url.split("index")[1]).split('/')[1]
+    $.ajax({
+        type: "POST",
+        url: '/ajax/run/' + my_key + '/',
+        success: console.log('sent command'),
+        dataType: 'text',
+        data: 'run',
+    });
+});
+
+
+$("#view").click(function() {
+    var my_url = window.location.href;
+    my_key = (my_url.split("index")[1]).split('/')[1]
+    $.ajax({
+        type: "POST",
+        url: '/ajax/view/' + my_key + '/',
+        success: console.log('sent command'),
+        dataType: 'text',
+        data: 'view',
+    });
+});
+
+
+$("#kill").click(function() {
+    var my_url = window.location.href;
+    my_key = (my_url.split("index")[1]).split('/')[1]
+    $.ajax({
+        type: "POST",
+        url: '/ajax/kill/' + my_key + '/',
+        success: console.log('sent command'),
+        dataType: 'text',
+        data: 'kill',
+    });
+});

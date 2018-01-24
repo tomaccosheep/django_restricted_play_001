@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^ajax/make/(?P<project_id>[\w]+)/$', views.make, name='project_id'),
     url(r'^ajax/run/(?P<project_id>[\w]+)/$', views.run, name='project_id'),
     url(r'^view/(?P<project_id>[\w]+)/$', views.view, name='project_id'),
+    url(r'^view_redirect/(?P<project_id>[\w]+)/$', views.view_redirect, name='project_id'),
     #url(r'^view/(?P<port_id>[\w]+)/$', HttpProxy.as_view(base_url=settings.PROXY_BASE_URL), name='port_id'),
     url(r'^ajax/kill/(?P<project_id>[\w]+)/$', views.kill, name='project_id'),
     

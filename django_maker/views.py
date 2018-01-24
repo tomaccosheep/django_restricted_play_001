@@ -69,21 +69,14 @@ def run(request, project_id):
 
 def view(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)
-    contect_dict = {
-                'project_id': project_id
-                }
     remoteurl = 'http://127.0.0.1:' + str(proj.id + 8000) + '/'
     return proxy_view(request, remoteurl)
 
-"""
-def view(request, project_id):
+
+def view_redirect(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)
-    contect_dict = {
-                'project_id': project_id
-                }
     remoteurl = 'http://127.0.0.1:' + str(proj.id + 8000) + '/'
     return HttpResponseRedirect(remoteurl)
-"""
 
 def kill(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)

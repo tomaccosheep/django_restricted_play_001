@@ -16,7 +16,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django_maker import views
-from django.views.generic import RedirectView
+from django.conf import settings
+#from httpproxy.views import HttpProxy
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
@@ -25,10 +27,9 @@ urlpatterns = [
     url(r'^ajax/save/(?P<project_id>[\w]+)/$', views.save, name='project_id'),
     url(r'^ajax/make/(?P<project_id>[\w]+)/$', views.make, name='project_id'),
     url(r'^ajax/run/(?P<project_id>[\w]+)/$', views.run, name='project_id'),
-    url(r'^ajax/view/(?P<project_id>[\w]+)/$', views.view, name='project_id'),
+    url(r'^view/(?P<project_id>[\w]+)/$', views.view, name='project_id'),
+    #url(r'^view/(?P<port_id>[\w]+)/$', HttpProxy.as_view(base_url=settings.PROXY_BASE_URL), name='port_id'),
     url(r'^ajax/kill/(?P<project_id>[\w]+)/$', views.kill, name='project_id'),
-    url(r'^view_site/(?P<port>[\w]+)/$', RedirectView.as_view(url='http://127.0.0.1:8006'), name='user_page'),    
     
 ]
-
 

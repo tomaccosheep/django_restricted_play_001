@@ -1,3 +1,7 @@
+body{
+	background-color: yellow;
+}
+
 .maincol {
     display: flex;
     flex-direction: column;

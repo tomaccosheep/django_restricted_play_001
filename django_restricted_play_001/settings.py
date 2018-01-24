@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_maker',
     'corsheaders',
+    'httpproxy',
 ]
 
 MIDDLEWARE = [
@@ -129,5 +130,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
+PROXY_BASE_URL = 'http://127.0.0.1:'
 

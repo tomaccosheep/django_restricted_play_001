@@ -7,12 +7,14 @@ import subprocess
 import fileinput
 import time
 from django.utils.crypto import get_random_string
+from proxy.views import proxy_view
 
 def index(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)
     context_dict = {'con_001': proj.con_001,
                     'id': proj.id,
-                    'port_id': proj.id + 8000
+                    'port_id': proj.id + 8000,
+                    'project_id': project_id,
                     }
     return render(request, 'django_maker/index.html', context=context_dict)
 
@@ -65,11 +67,23 @@ def run(request, project_id):
     subprocess.Popen(command_run_server.split(), env=my_env)
     return JsonResponse({'ran': True})
 
-
 def view(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)
-    remoteurl = 'http://127.0.0.1:' + str(8000 + proj.id) + '/'
-    return proxyagain.views.proxy_view(request, remoteurl)
+    contect_dict = {
+                'project_id': project_id
+                }
+    remoteurl = 'http://127.0.0.1:' + str(proj.id + 8000) + '/'
+    return proxy_view(request, remoteurl)
+
+"""
+def view(request, project_id):
+    proj = Play_Project.objects.get(unique_id=project_id)
+    contect_dict = {
+                'project_id': project_id
+                }
+    remoteurl = 'http://127.0.0.1:' + str(proj.id + 8000) + '/'
+    return HttpResponseRedirect(remoteurl)
+"""
 
 def kill(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)

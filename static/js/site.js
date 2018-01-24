@@ -70,19 +70,19 @@ $("#run").click(function() {
     });
 });
 
-/*
+
 $("#view").click(function() {
     var my_url = window.location.href;
     my_key = (my_url.split("index")[1]).split('/')[1]
     $.ajax({
-        type: "POST",
-        url: '/ajax/view/' + my_key + '/',
+        type: "GET",
+        url: '/ajax/view/' + port_id + '/',
         success: console.log('sent command'),
         dataType: 'text',
         data: 'view',
     });
 });
-*/
+
 
 $("#kill").click(function() {
     var my_url = window.location.href;

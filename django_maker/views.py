@@ -49,7 +49,6 @@ def make(request, project_id):
         print(line.replace('__con_001__', proj.con_001), end='')
     return JsonResponse({'made': True})
 
-
 def run(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -57,14 +56,18 @@ def run(request, project_id):
     command_run_mig1 = "python3 {usr_dir}/user_project/manage.py makemigrations".format(usr_dir=usr_dir_string)
     command_run_mig2 = "python3 {usr_dir}/user_project/manage.py migrate".format(usr_dir=usr_dir_string)
     command_run_server = "python3 {usr_dir}/user_project/manage.py runserver ".format(usr_dir=usr_dir_string) + str(8000 + proj.id)
-    subprocess.run(command_run_mig1, shell=False)
-    subprocess.run(command_run_mig2, shell=False)
-    subprocess.Popen(command_run_server.split(), shell=False)
+    my_env = os.environ.copy()
+    my_env["DJANGO_SETTINGS_MODULE"] = "user_project.settings"
+#    subprocess.run("printenv", shell=False)
+    subprocess.run(command_run_mig1.split(), env=my_env)
+    subprocess.run(command_run_mig2.split(), env=my_env)
+    subprocess.Popen(command_run_server.split(), env=my_env)
     return JsonResponse({'ran': True})
+
 
 def view(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)
-    return HttpResponseRedirect('/view_site/{}/'.format(str(8000 + proj.id)))
+    return HttpResponseRedirect('http://127.0.0.1:{}/'.format(str(8000 + proj.id)))
 
 def kill(request, project_id):
     return JsonResponse({'kill': True})

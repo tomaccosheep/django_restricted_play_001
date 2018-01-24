@@ -23,10 +23,11 @@ Your ID: {{ id }}
         <div id="save" class='object dj_button nosel'>Save</div>
         <div id="make" class='object dj_button nosel'>Make</div>
         <div id="run" class='object dj_button nosel'>Run</div>
-        <div id="view" class='object dj_button nosel'>View</div>
+        <div id="view" class='object dj_button nosel'><a href="http://127.0.0.1:{{ port_id }}/">View</a></div>
         <div id="kill" class='object dj_button nosel'>Kill</div>
     </div>
 </form>
+<a href="http://127.0.0.1:{{ port_id }}/">Go to site</a>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="{% static 'js/site.js' %}"></script>
 </body>

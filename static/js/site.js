@@ -70,7 +70,7 @@ $("#run").click(function() {
     });
 });
 
-
+/*
 $("#view").click(function() {
     var my_url = window.location.href;
     my_key = (my_url.split("index")[1]).split('/')[1]
@@ -82,7 +82,7 @@ $("#view").click(function() {
         data: 'view',
     });
 });
-
+*/
 
 $("#kill").click(function() {
     var my_url = window.location.href;

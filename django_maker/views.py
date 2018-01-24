@@ -12,6 +12,7 @@ def index(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)
     context_dict = {'con_001': proj.con_001,
                     'id': proj.id,
+                    'port_id': proj.id + 8000
                     }
     return render(request, 'django_maker/index.html', context=context_dict)
 
@@ -38,11 +39,11 @@ def make(request, project_id):
     dir_path = os.path.dirname(os.path.realpath(__file__))
     template_string = dir_path + "/django_template_dir/user_project"
     usr_dir_string = dir_path + "/django_usr_dirs/" + project_id
-    command_remove = "rm -r {usr_dir}".format(usr_dir = usr_dir_string)
-    command_rsync = "rsync -avP {template} {usr_dir}".format(template = template_string, usr_dir = usr_dir_string)
-    subprocess.run(command_remove, shell=False)
+    command_remove = "/bin/rm -r {usr_dir}".format(usr_dir = usr_dir_string)
+    command_rsync = "/usr/bin/rsync -avP {template} {usr_dir}".format(template = template_string, usr_dir = usr_dir_string)
+#    subprocess.run(command_remove, shell=False)
     command_rsync_list = command_rsync.split()
-    subprocess.run(command_rsync, shell=False)
+    subprocess.run(command_rsync, shell=True)
     proj = Play_Project.objects.get(unique_id=project_id)
     time.sleep(1)
     for line in fileinput.input([dir_path + "/django_usr_dirs/" + project_id + "/user_project/static/css/style.css"], inplace=True):
@@ -67,7 +68,11 @@ def run(request, project_id):
 
 def view(request, project_id):
     proj = Play_Project.objects.get(unique_id=project_id)
-    return HttpResponseRedirect('http://127.0.0.1:{}/'.format(str(8000 + proj.id)))
+    remoteurl = 'http://127.0.0.1:' + str(8000 + proj.id) + '/'
+    return proxyagain.views.proxy_view(request, remoteurl)
 
 def kill(request, project_id):
+    proj = Play_Project.objects.get(unique_id=project_id)
+    kill_string = "kill $(ps auxw | grep 'python3 manage.py runserver {user_port}'|grep -ve 'grep' -e '/usr/bin'|awk '{{print $2}}'".format(user_port=proj.id)
+    subprocess.run(kill_string.split(), shell=True)
     return JsonResponse({'kill': True})
